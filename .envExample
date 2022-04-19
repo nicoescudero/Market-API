@@ -1,0 +1,6 @@
+DB_NAME=MyDatabase
+DB_USER=username
+DB_PASSWORD='Password'
+DIALECT=mysql
+HOST=127.0.0.1
+KEY=secretKey
