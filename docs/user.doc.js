@@ -25,8 +25,7 @@
  *      id: 1
  *      username: john99
  *      email: john99@gmail.com
- *      passwrod: fdsjfsdkljjro3ijio12irj1oirh23io
- * 
+ *      password: $2b$10$8IFeWBoqnEz9BtWBtjC5XumW793de59r5O6TvcCq076aw1DAw6I9m
  *    UserRequirements:
  *     type: object
  *     properties:
@@ -44,13 +43,14 @@
  *      password: ""
  *      photo: "photo address"
  *   parameters:
- *    userId:
+ *    id:
  *     in: path
- *     name: userId
+ *     type: integer
+ *     name: id
  *     required: true
  *     description: id of user
  *     schema:
- *      type: string
+ *      type: integer
  *   responses:
  *    InvalidForm:
  *     description: Error Unprocessable Entity
@@ -91,7 +91,7 @@
 
 /**
  * @swagger
- * /auth/user/login:
+ * /user/auth/login:
  *  post:
  *   summary: Login a User
  *   tags: [User]
@@ -116,7 +116,7 @@
 
 /**
  * @swagger
- * /auth/user/register:
+ * /user/auth/register:
  *  post:
  *   summary: Create a User
  *   tags: [User]
@@ -131,6 +131,56 @@
  *     $ref: "#components/responses/Success"
  *    400:
  *     $ref: "#components/responses/BadRequest"
+ *    422:
+ *     $ref: "#components/responses/InvalidForm"
+ */
+
+
+/**
+ * @swagger
+ * /user/delete/{id}:
+ *  delete:
+ *   summary: Delete a User
+ *   tags: [User]
+ *   parameters:
+ *    - $ref: "#components/parameters/id"
+ *   responses:
+ *    200:
+ *     $ref: "#components/responses/Success"
+ *    400:
+ *     $ref: "#components/responses/BadRequest"
+ *    404:
+ *     $ref: "#components/responses/NotFound"
+ *    422:
+ *     $ref: "#components/responses/InvalidForm"
+ */
+
+/**
+ * @swagger
+ * /user/update/{id}:
+ *  put:
+ *   summary: Update a User
+ *   tags: [User]
+ *   parameters:
+ *    - $ref: "#components/parameters/id"
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       example: 
+ *         username: ""
+ *         email: ""
+ *         password: ""
+ *         newPassword: ""
+ *         photo: "photo address"
+ *   responses:
+ *    200:
+ *     $ref: "#components/responses/Success"
+ *    400:
+ *     $ref: "#components/responses/BadRequest"
+ *    404:
+ *     $ref: "#components/responses/NotFound"
  *    422:
  *     $ref: "#components/responses/InvalidForm"
  */
