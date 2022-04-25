@@ -5,50 +5,47 @@
  *    User:
  *     type: object
  *     required:
- *      - username
- *      - email
- *      - password
+ *      - description
+ *      - photo
+ *      - idUser
  *     properties:
  *      id:
  *       type: integer
  *       description: id generated automatically
- *      username:
+ *      description:
  *       type: string
- *       description: username
- *      email:
+ *       description: publication description
+ *      photo:
  *       type: string
- *       description: email of user
- *      password:
- *       type: string
- *       description: password of user
+ *       description: picture of publication
+ *      idUser:
+ *       type: int
+ *       description: user id
  *     example:
  *      id: 1
- *      username: john99
- *      email: john99@gmail.com
- *      password: $2b$10$8IFeWBoqnEz9BtWBtjC5XumW793de59r5O6TvcCq076aw1DAw6I9m
- *    UserRequirements:
+ *      description: play station 5
+ *      photo: https://images.com/photos/ps5.jpg
+ *      idUser: 1
+ *    PublicationRequirements:
  *     type: object
  *     properties:
- *      username:
- *       type: string
- *      email:
- *       type: string
- *      password:
+ *      description:
  *       type: string
  *      photo:
  *       type: file
+ *      idUser:
+ *       type: integer
  *     example:
- *      username: ""
- *      email: ""
- *      password: ""
+ *      description: ""
  *      photo: "photo address"
+ *      idUser: ""
  *   parameters:
- *    id:
+ *    idP:
  *     in: path
  *     type: integer
  *     name: id
  *     required: true
- *     description: id of user
+ *     description: publication id
  *     schema:
  *      type: integer
  *   responses:
@@ -60,12 +57,12 @@
  *       example:
  *        errors: []
  *    NotFound:
- *     description: User not found
+ *     description: Publication not found
  *     type: object
  *     content:
  *      application/json:
  *       example:
- *        message: Error, User not found
+ *        message: Error, Publication not found
  *    BadRequest:
  *     description: Bad Request
  *     type: object
@@ -80,29 +77,25 @@
  *      application/json:
  *       example:
  *        id: 1
- *        username: john99
- *        email: john99@gmail.com
- *        password: 3hi3ugi3bgiu43biqbli598
+ *        description: play station 5
+ *        photo: https://images.com/photos/ps5.jpg
+ *        idUser: 1
  *        
  * tags: 
- *  name: User
- *  description: User Data
+ *  name: Publication
+ *  description: Publication Data
  */
+
+
 
 /**
  * @swagger
- * /user/auth/login:
- *  post:
- *   summary: Login a User
- *   tags: [User]
- *   requestBody:
- *    required: true
- *    content:
- *     application/json:
- *      schema:
- *       example:
- *        email: ""
- *        password: ""
+ * /publication/get/{id}:
+ *  get:
+ *   summary: Get a Publication
+ *   tags: [Publication]
+ *   parameters:
+ *    - $ref: "#components/parameters/idP"
  *   responses:
  *    200:
  *     $ref: "#components/responses/Success"
@@ -116,18 +109,37 @@
 
 /**
  * @swagger
- * /user/auth/register:
+ * /publication/getAll/{id}:
+ *  get:
+ *   summary: Get All Publications by User Id
+ *   tags: [Publication]
+ *   parameters:
+ *    - $ref: "#components/parameters/id"
+ *   responses:
+ *    200:
+ *     $ref: "#components/responses/Success"
+ *    400:
+ *     $ref: "#components/responses/BadRequest"
+ *    404:
+ *     $ref: "#components/responses/NotFound"
+ *    422:
+ *     $ref: "#components/responses/InvalidForm"
+ */
+
+/**
+ * @swagger
+ * /publication/new:
  *  post:
- *   summary: Create a User
- *   tags: [User]
+ *   summary: Create a publication
+ *   tags: [Publication]
  *   requestBody:
  *    required: true
  *    content:
  *     application/json:
  *      schema:
- *       $ref: "#components/schemas/UserRequirements"
+ *       $ref: "#components/schemas/PublicationRequirements"
  *   responses:
- *    201:
+ *    200:
  *     $ref: "#components/responses/Success"
  *    400:
  *     $ref: "#components/responses/BadRequest"
@@ -137,22 +149,19 @@
 
 /**
  * @swagger
- * /user/update/{id}:
+ * /publication/update/{id}:
  *  put:
- *   summary: Update a User
- *   tags: [User]
+ *   summary: Update a Publication
+ *   tags: [Publication]
  *   parameters:
- *    - $ref: "#components/parameters/id"
+ *    - $ref: "#components/parameters/idP"
  *   requestBody:
  *    required: true
  *    content:
  *     application/json:
  *      schema:
  *       example: 
- *         username: ""
- *         email: ""
- *         password: ""
- *         newPassword: ""
+ *         description: ""
  *         photo: "photo address"
  *   responses:
  *    200:
@@ -167,12 +176,12 @@
 
 /**
  * @swagger
- * /user/delete/{id}:
+ * /publication/delete/{id}:
  *  delete:
- *   summary: Delete a User
- *   tags: [User]
+ *   summary: Delete a Publication
+ *   tags: [Publication]
  *   parameters:
- *    - $ref: "#components/parameters/id"
+ *    - $ref: "#components/parameters/idP"
  *   responses:
  *    200:
  *     $ref: "#components/responses/Success"

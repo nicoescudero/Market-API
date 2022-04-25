@@ -15,6 +15,7 @@ module.exports=(sequelize,DataTypes)=>{
         },
         idUser:{
             type:DataTypes.INTEGER,
+            required:true
         }
     });
 }
