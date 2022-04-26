@@ -6,7 +6,7 @@ const routes=Router();
 routes.post('/new',publication.verify,pbCtrl.create);
 routes.delete('/delete/:id',pbCtrl.delete);
 routes.put('/update/:id',publication.verify,pbCtrl.update);
-routes.get('/getAll/:id',pbCtrl.getPostsByUserId);
+routes.get('/getAll',pbCtrl.getPostsByUserId);
 routes.get('/get/:id',pbCtrl.getPost);
 
 module.exports=routes;

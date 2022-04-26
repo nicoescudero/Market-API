@@ -10,12 +10,21 @@ connect();
 
 const swaggerDefinition={
     definition:{
-        openapi: '3.0.0',
+        openapi: '3.0.1',
         info:{
             title:'Market API',
             version: '1.0.0',
             description: 'A Market Api'
         },
+        components: {
+            securitySchemes: {
+              bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+              }
+            }
+          },
         servers:[{url:'http://localhost:3000'}]
     },
     apis:['./docs/*.js']

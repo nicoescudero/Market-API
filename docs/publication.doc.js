@@ -33,12 +33,9 @@
  *       type: string
  *      photo:
  *       type: file
- *      idUser:
- *       type: integer
  *     example:
  *      description: ""
  *      photo: "photo address"
- *      idUser: ""
  *   parameters:
  *    idP:
  *     in: path
@@ -94,6 +91,8 @@
  *  get:
  *   summary: Get a Publication
  *   tags: [Publication]
+ *   security:
+ *      - bearerAuth: []
  *   parameters:
  *    - $ref: "#components/parameters/idP"
  *   responses:
@@ -109,12 +108,12 @@
 
 /**
  * @swagger
- * /publication/getAll/{id}:
+ * /publication/getAll:
  *  get:
  *   summary: Get All Publications by User Id
  *   tags: [Publication]
- *   parameters:
- *    - $ref: "#components/parameters/id"
+ *   security:
+ *      - bearerAuth: []
  *   responses:
  *    200:
  *     $ref: "#components/responses/Success"
@@ -132,6 +131,8 @@
  *  post:
  *   summary: Create a publication
  *   tags: [Publication]
+ *   security:
+ *      - bearerAuth: []
  *   requestBody:
  *    required: true
  *    content:
@@ -153,6 +154,8 @@
  *  put:
  *   summary: Update a Publication
  *   tags: [Publication]
+ *   security:
+ *      - bearerAuth: []
  *   parameters:
  *    - $ref: "#components/parameters/idP"
  *   requestBody:
@@ -180,6 +183,8 @@
  *  delete:
  *   summary: Delete a Publication
  *   tags: [Publication]
+ *   security:
+ *      - bearerAuth: []
  *   parameters:
  *    - $ref: "#components/parameters/idP"
  *   responses:

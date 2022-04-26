@@ -3,11 +3,11 @@ const controller={};
 
 controller.create=async(req,res)=>{
     try {
-        const {description,photo,idUser}=req.body;
+        const {description,photo}=req.body;
         const image=req.file;
         let address;
         (image)?address=image.path:address=photo;
-        const post=await Publication.create({description:description,photo:address,idUser:idUser});
+        const post=await Publication.create({description:description,photo:address,idUser:req.user});
         return res.json(post);
     } catch (error) {
         console.error(error);
@@ -17,7 +17,7 @@ controller.create=async(req,res)=>{
 
 controller.delete=async(req, res) => {
     try {
-        const post=await Publication.destroy({where:{id:req.params.id}});
+        const post=await Publication.destroy({where:{id:req.params.id,idUser:req.user}});
         if(post)return res.json({message:'Publication deleted'});
         else return res.status(404).json({message:'Publication not found'});
 
@@ -31,7 +31,7 @@ controller.update=async(req, res) => {
     try {
         const {description,photo}=req.body;
         const image=req.file;
-        const post=await Publication.findOne({where:{id:req.params.id}});
+        const post=await Publication.findOne({where:{id:req.params.id,idUser:req.user}});
         if(!post) return res.status(404).json({message:'Publication not found'});
         else{
             var address;
@@ -48,7 +48,8 @@ controller.update=async(req, res) => {
 
 controller.getPostsByUserId=async(req, res) => {
     try {
-        const posts=await Publication.findAll({where:{idUser:req.params.id}});
+        console.log(`USER ID: ${req.user}`);
+        const posts=await Publication.findAll({where:{idUser:req.user}});
         if(posts.length > 0)return res.json(posts);
         else return res.status(404).json({message:'Publications not found'});
     } catch (error) {
@@ -59,7 +60,7 @@ controller.getPostsByUserId=async(req, res) => {
 
 controller.getPost=async(req, res) => {
     try {
-        const post=await Publication.findOne({where:{id:req.params.id}});
+        const post=await Publication.findOne({where:{id:req.params.id,idUser:req.user}});
         if(post)return res.json(post);
         else return res.status(404).json({message:'Publication not found'});
     } catch (error) {
